@@ -26,6 +26,7 @@ class Card(db.Model):
     # Wyprowadzanie obiektu i identyfikatora
     def __repr__(self):
         return f'<Card {self.id}>'
+
     
 
 #Zadanie #2. Utwórz tabelę użytkowników
@@ -38,7 +39,7 @@ class Card(db.Model):
 
 
 
-# Running the content page
+# Uruchamianie strony zawartości
 @app.route('/', methods=['GET','POST'])
 def login():
         error = ''
@@ -46,7 +47,7 @@ def login():
             form_login = request.form['email']
             form_password = request.form['password']
             
-            #Assignment #4. Implement authorisation
+            # Zadanie #4. Wdrożyć autoryzację
             
 
 
@@ -62,7 +63,7 @@ def reg():
         login= request.form['email']
         password = request.form['password']
         
-        #Assignment #3. Make it so that the user's data is recorded to the database
+        # Zadanie #3. Zadbaj o to, aby dane użytkownika zostały zapisane w bazie danych
         
 
         
@@ -72,26 +73,26 @@ def reg():
         return render_template('registration.html')
 
 
-# Running the content page
+# Uruchamianie strony zawartości
 @app.route('/index')
 def index():
-    # Displaying the databaase entries
+    # Wyświetlanie wpisów z bazy danych
     cards = Card.query.order_by(Card.id).all()
     return render_template('index.html', cards=cards)
 
-# Running the page with the entry
+# Uruchomienie strony z wpisem
 @app.route('/card/<int:id>')
 def card(id):
     card = Card.query.get(id)
 
     return render_template('card.html', card=card)
 
-# Running the entry creation page
+# Uruchomienie strony tworzenia wpisu
 @app.route('/create')
 def create():
     return render_template('create_card.html')
 
-# The entry forn
+# Formularz zgłoszeniowy
 @app.route('/form_create', methods=['GET','POST'])
 def form_create():
     if request.method == 'POST':
@@ -99,7 +100,7 @@ def form_create():
         subtitle =  request.form['subtitle']
         text =  request.form['text']
 
-        # Creating an object that will be sent to the DB
+        # Tworzenie obiektu, który zostanie wysłany do bazy danych
         card = Card(title=title, subtitle=subtitle, text=text)
 
         db.session.add(card)
